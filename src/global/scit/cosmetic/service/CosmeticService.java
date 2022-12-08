@@ -12,6 +12,8 @@ public class CosmeticService {
 	// DAO 부르고
 	CosmeticDAO dao = new CosmeticDAO();
 	
+	CosMember cos = new CosMember();
+	Product pos = new Product();
 	
 	//로그인 ///이부분은 잘 몰?루 
 	public int loginMember(CosMember member) {
@@ -25,28 +27,18 @@ public class CosmeticService {
 		int result =dao.insertMember(member);
 		return result;		
 	}
-/*
+
 	//회원 한명 조회	
 	public CosMember selectMember(String usrid) {
 		CosMember cosmember = dao.selectMember(usrid);
 		return cosmember;
 	}
 	//회원 전체조회
-		public List <CosMember> MemberAll(){
-			List<CosMember> list =dao.MemberAll();
+		public List <CosMember> memberAll(){
+			List<CosMember> list =dao.memberAll();
 			return list;
 		}
-*/
-	//회원조회
-	public CosMember selectMember(String usrid) {
-	CosMember member = dao.selectMember(usrid);
-	return member;
-	}
-	//전체회원조회
-	public List<CosMember> MemberAll() {
-	List<CosMember> list = dao.MemberAll();
-	return list;
-	}
+
 	//회원수정
 	public int updateMember(CosMember member) {
 		int result =dao.updateMember(member);
@@ -80,8 +72,8 @@ public class CosmeticService {
 	}
 	
 	//화장품 전체조회
-	public List<Product> ProductAll(){
-		List<Product> list =dao.ProductAll();
+	public List<Product> productAll(){
+		List<Product> list =dao.productAll();
 		return list;
 	}
 

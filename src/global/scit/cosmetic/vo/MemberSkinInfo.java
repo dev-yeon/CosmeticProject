@@ -25,6 +25,6 @@ this.skinproblem = skinproblem;
 }
 @Override
 public String toString() {
-return "MemberSkinInfo [usrid=" + usrid + ", skinproblem=" + skinproblem + "]";
+return "usrid : " + usrid + ", skinproblem : " + skinproblem;
 }
 }

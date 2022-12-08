@@ -7,7 +7,7 @@ public class CosMember {
 	private int skinproblem;
 	private int usrrole;
 
-	public CosMember(String usrid, String password, String name, int skinproblem, int usrrole) {
+	public CosMember(String usrid, String password, String name,int skinproblem, int usrrole) {
 		super();
 		this.usrid = usrid;
 		this.password = password;

@@ -14,7 +14,7 @@ public interface CosmeticMapper {
 	
 	public CosMember selectMember(String usrId);//회원 조회
 	public int deleteMember(CosMember member);//회원 탈퇴
-	public List<CosMember> MemberAll(); //회원 전체조회 
+	public List<CosMember> memberAll(); //회원 전체조회 
 	public int checklogin(String usrId,String usrPw); //회원 로그인 
 	
 		
@@ -23,7 +23,7 @@ public interface CosmeticMapper {
 	public int updateProduct(Product product); //화장품 수정
 	public int deleteProduct(String productid); //화장품 삭제
 	
-	public List<Product> ProductAll(); //화장품 전체조회		
+	public List<Product> productAll(); //화장품 전체조회		
 	public CosMember deleteMember(String usrid);
 }
 

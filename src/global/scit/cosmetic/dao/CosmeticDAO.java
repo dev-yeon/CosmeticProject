@@ -52,11 +52,11 @@ public class CosmeticDAO {
 	}
 
 	// 회원 전체조회
-	public List<CosMember> MemberAll() {
+	public List<CosMember> memberAll() {
 		SqlSession session = null;
 		session = factory.openSession();
 		CosmeticMapper mapper = session.getMapper(CosmeticMapper.class);
-		List<CosMember> List = mapper.MemberAll();
+		List<CosMember> List = mapper.memberAll();
 		return List;
 	}
 
@@ -111,11 +111,11 @@ public class CosmeticDAO {
 	};
 
 //화장품 전체조회
-	public List<Product> ProductAll() {
+	public List<Product> productAll() {
 		SqlSession session = null;
 		session = factory.openSession();
 		CosmeticMapper mapper = session.getMapper(CosmeticMapper.class);
-		List<Product> List = mapper.ProductAll();
+		List<Product> List = mapper.productAll();
 		return List;
 	}
 
