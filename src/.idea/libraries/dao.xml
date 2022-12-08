@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="dao">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/global/scit/cosmetic/dao/ojdbc6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/global/scit/cosmetic/dao/mybatis-3.5.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -29,7 +29,7 @@ public class Product {
 		this.productid = productid;
 	}
 
-	public String getProductname() {
+	public String getProductname(String productid) {
 		return productname;
 	}
 
