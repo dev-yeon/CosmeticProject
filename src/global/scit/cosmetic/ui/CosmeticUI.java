@@ -104,47 +104,64 @@ public class CosmeticUI {
 			String usrid = null;
 			String usrname = null;
 			int skinproblem = 1;
+
 			System.out.println(" [정보 수정] ");
 			System.out.println(" > 수정할 회원의 아이디 입력 ");
-			usrid=sc.next();
+
+			usrid = sc.next();
+
 			CosMember info = service.selectMember(usrid);
-			if(info==null) {
+
+			if (info == null) {
 				System.out.println(" 해당하는 아이디가 없습니다. ");
 				return;
 			}
-			String password;
+
+
 			System.out.println(" [비밀번호 수정] ");
+
+			String password;
+
 			password = sc.next();
+
 			System.out.println(" > 비밀번호 확인 ");
-			String password1=sc.next();
-			if(!password1.equals(password)) {
+
+			String password1 = sc.next();
+
+			if (!password1.equals(password)) {
 				System.out.println("비밀 번호를 다시 입력해주세요");
 				return;
+			}
 
-				while(true){
-					System.out.println(" >주요 관심사 선택");
-					System.out.println(" 1) 미백 2) 노화 3) 여드름 ");
-					System.out.println();
-					try {
-						skinproblem=sc.nextInt();
-						if(!(skinproblem>=1 && skinproblem<=3)) {
-							throw new Exception();
-							//내가 일부러 exception 발생시키는것.
-						} catch(Exception e) {
-							System.out.println("오류 : 항목을 잘못 선택했습니다.");
-							sc.nextLine();
-							continue; //주요관심사를 다시 입력받도록 간다.
-						}
-						break; // exception이 터지지 않으면 밖으로 빠져나가도록 해준다.
-					}//while
-				}//if
-				CosMember member = new CosMember(usrid, password, null, skinproblem, 0);
+			while (true) {
+				System.out.println(" >주요 관심사 선택");
+				System.out.println(" 1) 미백 2) 노화 3) 여드름 ");
+				System.out.println();
+
+				try {
+					skinproblem = sc.nextInt();
+					if (!(skinproblem >= 1 && skinproblem <= 3)) {
+						throw new Exception();
+					}
+					// 내가 일부러 exception 발생시키는것.
+				} catch (Exception e) {
+					System.out.println("오류 : 항목을 잘못 선택했습니다.");
+					sc.nextLine();
+					continue; // 주요관심사를 다시 입력받도록 간다.
+				}
+				break; // exception이 터지지 않으면 밖으로 빠져나가도록 해준다.
+			} // while
+
+			CosMember member = new CosMember(usrid, password, null, skinproblem, 0);
 //이름은 수정할 것이 없기 때문에 이름 부분은 null. usrrole도 기본값
-				int result = service.updateMember(member); //아직 이 메소드를 안만들었기 때문에 그 전에는 빨간줄 표시.
-				if(result == 1)
-					System.out.println(" 정보 수정이 완료되었습니다.");
-				else
-					System.out.println("** 정보 수정에 실패했습니다.");}
+
+			int result = service.updateMember(member); // 아직 이 메소드를 안만들었기 때문에 그 전에는 빨간줄 표시.
+
+			if (result == 1)
+				System.out.println(" 정보 수정이 완료되었습니다.");
+			else
+				System.out.println("** 정보 수정에 실패했습니다.");
+		}
 
 //회원 삭제
 			private void deleteMember() {
