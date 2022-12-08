@@ -16,14 +16,13 @@ import global.scit.cosmetic.vo.Product;
 public class CosmeticUI {
 	Scanner sc = new Scanner(System.in);
 	CosmeticService service = new CosmeticService();
+	CosMember c = new CosMember();
 
 	public CosmeticUI() {
 		boolean login=false;
 		String choice = null;
 		while (true) {
-
 			startMenu();
-
 			switch (choice) {
 
 				case "1":
@@ -49,27 +48,25 @@ public class CosmeticUI {
 						System.out.println("아이디가 존재하지 않습니다.");
 					}		
 					break;
-					
-					
 				case "2":
 					insertMember();
 					break;
 				case "0":
 					System.out.println("** 프로그램 종료합니다. ");
 					System.exit(1);
-					return;
+					break;
 				default:
 					System.out.println("다시 선택해 주세요");
 					sc.nextLine(); // 버퍼에 남은 데이터 싹지우기
+					break;
 				}//switch
+			if(login)break;
 			}//while
-		CosMember c = new CosMember();
-			// 일반회원메뉴
-		
-		
-			while (c.getUsrrole()==0) {
-				if(login=false) return;
-				else {
+
+		// 일반회원메뉴
+			while(c.getUsrrole()==0) {
+				if (login = false) return;
+
 				 userMenu();
 				choice = sc.next();
 				switch (choice) {
@@ -91,7 +88,7 @@ public class CosmeticUI {
 						default:
 							System.out.println("다시 선택해 주세요");
 							sc.nextLine(); // 버퍼에 남은 데이터 싹지우기
-				
+
 								}//switch
 					}//while
 
@@ -127,34 +124,57 @@ public class CosmeticUI {
 									}//switch
 
 				}//while
-			}	
+			}// CosmeticUI()
 			
-		}
+			private void login() {
 
-	/*
-	 * private void login() { CosMember cosMember = new CosMember(); String userId =
-	 * null; String userPw = null; boolean loginchance = false; // 최대 10번의 기회를 준다
-	 * for (int i = 0; i <= 5; i++) { // 아이디와 비밀번호를 입력받는다. try {
-	 * System.out.println("기존 회원 아이디를 입력하세요 : "); userId = sc.next(); throw new
-	 * Exception(); } catch (Exception e) {
-	 * System.out.println("오류 : 항목을 잘못 선택했습니다."); sc.nextLine(); continue; } break;
-	 * try { System.out.println("기존 회원 비번을 입력하세요 : "); userPw = sc.next(); throw new
-	 * Exception(); } catch (Exception e) {
-	 * System.out.println("오류 : 항목을 잘못 선택했습니다."); sc.nextLine(); continue; } break;
-	 * }
-	 * 
-	 * if (service.equals(userId) && service.equals(userPw)) {
-	 * System.out.println("환영합니다." + userId + "님."); loginchance = true;
-	 * 
-	 * } else { System.out.println("비밀번호가 일치하지 않습니다.");
-	 * System.out.println("** 프로그램 종료합니다. "); System.exit(0);
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * }}
-	 */
+				CosMember cosMember = new CosMember();
+				String usrid = null;
+				String usrpass = null;
+				boolean loginchance = false; // 최대 10번의 기회를 준다
+
+				for (int i = 0; i <= 5; i++) {
+
+					System.out.println("기존 회원 아이디를 입력하세요 : ");
+
+					usrid = sc.next();
+
+					CosMember idinfo = service.selectMember(usrid);
+
+					if (idinfo == null) {
+						System.out.println(" 해당하는 아이디가 없습니다. ");
+						return;
+					}
+					usrpass = sc.next();
+					CosMember passinfo = service.selectMember(usrpass);
+					System.out.println("기존 회원 패스워드 를 입력하세요 : ");
+					if (passinfo == null) {
+						System.out.println(" 해당하는 아이디가 없습니다. ");
+						return;
+					}
+					if(i==5)break;
+
+				}
+
+
+
+
+
+
+
+
+	  if (service.selectMember(usrid).equals(usrid) &&service.selectMember(usrpass).equals(usrpass)) {
+	  System.out.println("환영합니다." + usrid + "님.");
+	  loginchance = true;
+
+	  } else { System.out.println("비밀번호가 일치하지 않습니다.");
+	  System.out.println("** 프로그램 종료합니다. ");
+		  loginchance =false;
+	  System.exit(0);
+	  }
+	  }
+
+
 
 	private void deleteProduct() {
 		String productid, answer;
@@ -184,7 +204,7 @@ public class CosmeticUI {
 
 	private void updateProduct() {
 		String productid;
-		String productname;
+		String productname = null;
 		String choice;
 		int productprice = 0;
 		int producttype = 0;
@@ -193,6 +213,8 @@ public class CosmeticUI {
 		System.out.println("수정할 화장품의 아이디를 입력해주세요.");
 		productid = sc.next();
 		Product product = service.selectProduct(productid);
+		System.out.println(product+" \n수정합니다. ");
+		Product p = new Product(productid, productname, productprice, producttype, productsolution);
 
 		if (product == null) {
 			System.out.println(" 중복된 제품이 있습니다. ");
@@ -204,15 +226,25 @@ public class CosmeticUI {
 //Product p = new Product(productid, productname, productprice, producttype, productsolution);
 			choice = sc.next();
 			switch (choice) {
-			case "1":// 1) 화장품 이름 수정
 
-				System.out.println("수정할 화장품의 이름을 입력해주세요.");
+				case "1":// 1) 화장품 이름 수정
+
+				System.out.println("화장품의 이름을 다시 입력해주세요.");
 				productname = sc.next();
 				@SuppressWarnings("null")
-				Product p = new Product(productid, productname, productprice, producttype, productsolution);
+				Product p1 = new Product(null, productname, 0, 1, 1);
+				int result1 = service.insertProduct(p1);
+					if (result1 == 1)
+						System.out.println(" 제품 이름 수정이 완료되었습니다.");
+					else
+						System.out.println("** 제품 이름 수정이 실패했습니다.");
 
 				break;
 			// 2) 화장품 가격 수정
+				case "2":
+					System.out.println("화장품의 가격을 다시 입력해주세요.");
+					productprice=sc.nextInt();
+					Product p2 = new Product(productid, productname, 0, 1, 1);
 			// 3) 화장품 타입 수정
 			// 4) 화장품 기능 수정
 			// 0) 이 전 메뉴로 가기

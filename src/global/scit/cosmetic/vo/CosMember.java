@@ -21,7 +21,7 @@ public class CosMember {
 
 	}
 
-	public String getUsrid() {
+	public boolean getUsrid() {
 		return usrid;
 	}
 
