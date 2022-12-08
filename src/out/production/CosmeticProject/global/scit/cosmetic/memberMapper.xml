@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.scit.member.dao.CosmeticMapper">
+
+
+<insert id= "insertProduct" parameterType ="Product">
+	INSERT INTO 
+		cosmember
+	VALUES(#{usrid},#{usrpass}, #{usrname}, #{usrpass}, #{email}, #{addrno})
+</insert>
+<select id="selectMember" resultType="CosMember"
+		parameterType="String">
+		SELECT
+		c.usrid,c.usrname, c.email,
+		
+		s.skinproblem
+		FROM
+		cosmember c , memberskininfo s
+		WHERE
+		c.usrid =s.usrid
+		AND
+		usrid = #{usrid}
+	</select>
+
+	<update id="updateMember" parameterType="CosMember">
+	UPDATE cosmember
+	SET usrid =#{usrid}
+	WHERE usrid =#{usrid}	
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+	DELETE cosmember
+	where 
+	usrid = #{usrid}
+	</delete>
+	
+	<select id="selectAll" resultType="CosMember">
+		SELECT
+		c.usrid 
+		,c.usrname
+	    ,c.email	
+		,s.skinproblem
+		,c.userrole
+		FROM
+		cosmember c , memberskininfo s
+		WHERE
+		c.usrid= s.usrid
+	</select>
+
+</mapper>
