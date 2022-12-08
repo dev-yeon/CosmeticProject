@@ -65,6 +65,8 @@ public class CosmeticUI {
 			}//while
 		CosMember c = new CosMember();
 			// 일반회원메뉴
+		
+		
 			while (c.getUsrrole()==0) {
 				if(login=false) return;
 				else {
@@ -454,9 +456,10 @@ public class CosmeticUI {
 		// usrrole)
 		int result1 = service.insertMember(m); // 아직 이 메소드를 안만들었기 때문에 그 전에는 빨간줄 표시.
 		if (result1 == 1)
-			System.out.println(" 회원 가입이 완료되었습니다.");
+			{System.out.println(" 회원 가입이 완료되었습니다.");}
 		else
-			System.out.println("** 회원 가입을 실패했습니다.");
+			{System.out.println("** 회원 가입을 실패했습니다.");}
+			}
 	}
 
 	private void adminMenu() {
