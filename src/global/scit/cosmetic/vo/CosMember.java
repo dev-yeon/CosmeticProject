@@ -20,8 +20,7 @@ public class CosMember {
 		super();
 
 	}
-
-	public boolean getUsrid() {
+	public String getUsrid() {
 		return usrid;
 	}
 

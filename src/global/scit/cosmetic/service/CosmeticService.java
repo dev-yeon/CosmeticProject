@@ -67,6 +67,7 @@ public class CosmeticService {
 	}
 	//화장품 삭제
 	public int deleteProduct(String productid) {
+		@SuppressWarnings("unused")
 		int result= dao.deleteProduct(productid);
 		return 0;
 	}
