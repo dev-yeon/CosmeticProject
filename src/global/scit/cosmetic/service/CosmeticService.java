@@ -12,7 +12,8 @@ public class CosmeticService {
     public CosMember loginMember(String id ,String pw) {
         CosMember cosMember = new CosMember();
         cosMember.setUsrid(id);
-        cosMember.setPassword(pw);
+        cosMember.setUsrpass(pw);
+        cosMember = dao.loginMember(cosMember);
         return cosMember;
     }
     //신규회원가입

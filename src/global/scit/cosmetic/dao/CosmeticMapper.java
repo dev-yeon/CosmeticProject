@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import global.scit.cosmetic.vo.CosMember;
+import global.scit.cosmetic.vo.MemberSkinInfo;
 import global.scit.cosmetic.vo.Product;
 
 
 public interface CosmeticMapper {
-	public int loginMember(CosMember member); //회원로그인 0:일반회원, 1: 관리자 
+	public CosMember loginMember(CosMember member); //회원로그인 0:일반회원, 1: 관리자
 	public int insertMember(CosMember member); //신규회원가입
 	public int updateMember(Map<String, Object> member); //회원수정
 	

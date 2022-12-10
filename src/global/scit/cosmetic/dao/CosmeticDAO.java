@@ -2,6 +2,7 @@ package global.scit.cosmetic.dao;
 
 import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import global.scit.cosmetic.vo.CosMember;
+import global.scit.cosmetic.vo.MemberSkinInfo;
 import global.scit.cosmetic.vo.Product;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,11 +14,11 @@ public class CosmeticDAO {
     //1. 접속한다
     SqlSessionFactory factory = MybatisConfig.getSessionFactory(); // 접속할 수 있는 객체
     //회원로그인 0:일반회원, 1: 관리자
-    public int loginMember(CosMember member) {
+    public CosMember loginMember(CosMember member) {
         SqlSession session = null;
         session = factory.openSession();
         CosmeticMapper mapper = session.getMapper(CosmeticMapper.class);
-        int result = mapper.loginMember(member);
+        CosMember result = mapper.loginMember(member);
         session.commit();
         return result;
     };
@@ -34,6 +35,7 @@ public class CosmeticDAO {
         session.commit(); // 이 코드를 써줘야지 저장이 된다. 저장한 뒤에 close 해주는 것.
         return result;
     };
+
     //회원수정 --
     public int updateMember(Map<String, Object> map) {
         SqlSession session = null;
@@ -43,6 +45,7 @@ public class CosmeticDAO {
         session.commit();
         return result;
     };
+
     // 회원 탈퇴--
     public int deleteMember(String usrid) {
         SqlSession session = null;
@@ -52,6 +55,7 @@ public class CosmeticDAO {
         session.commit();
         return result;
     };
+
     //회원조회 --
     public CosMember selectMember(String usrid) {
         SqlSession session = null;
