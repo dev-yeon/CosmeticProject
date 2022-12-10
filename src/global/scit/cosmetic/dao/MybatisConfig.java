@@ -18,7 +18,7 @@ public class MybatisConfig {
 			Reader reader = Resources.getResourceAsReader(resource);
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 			reader.close();
-		}catch(Exception e ) {
+		} catch(Exception e ) {
 			e.printStackTrace();
 		}
 	}

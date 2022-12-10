@@ -3,15 +3,18 @@ package global.scit.cosmetic.vo;
 public class CosMember {
 	private String usrid;
 	private String password;
-	private String name;
+	private String usrname;
+
+	private String email;
 	private int skinproblem;
 	private int usrrole;
 
-	public CosMember(String usrid, String password, String name,int skinproblem, int usrrole) {
+	public CosMember(String usrid, String password, String usrname,String email,int skinproblem, int usrrole) {
 		super();
 		this.usrid = usrid;
 		this.password = password;
-		this.name = name;
+		this.usrname = usrname;
+		this.email=email;
 		this.skinproblem = skinproblem;
 		this.usrrole = usrrole;
 	}
@@ -36,12 +39,19 @@ public class CosMember {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsrname() {
+		return usrname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsrname(String usrname) {
+		this.usrname = usrname;
+	}
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getSkinproblem() {
@@ -62,7 +72,7 @@ public class CosMember {
 
 	@Override
 	public String toString() {
-		return " \n 회원의 usrid = " + usrid + ", password = " + password + ", name = " + name + ", 관심사 = " + skinproblem
-				+ "usrrole = "+usrrole ;
+		return " \n 회원의 usrid = " + usrid + ", password = " + password + ", usrname = " + usrname + "email = "+email+ ", 관심사 = " + skinproblem
+				+ "usrrole = "+usrrole;
 	}
 }

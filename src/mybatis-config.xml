@@ -3,14 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<properties resource="db.properties" /> 
+<properties resource="db.properties" />
 
 
-<typeAliases>
-<typeAlias type ="global.scit.member.vo.MemberInfo" alias="MemberInfo" />
-<typeAlias type ="global.scit.member.vo.Members" alias="Members" />
-<typeAlias type ="global.scit.member.vo.Addr" alias="Addr" />
-</typeAliases>
+	<typeAliases>
+		<typeAlias type ="global.scit.cosmetic.vo.CosMember" alias="CosMember" />
+		<typeAlias type ="global.scit.cosmetic.vo.MemberSkinInfo" alias="MemberSkinInfo" />
+		<typeAlias type ="global.scit.cosmetic.vo.Product" alias="Product" />
+	</typeAliases>
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />

@@ -1,10 +1,10 @@
 package global.scit.cosmetic.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import global.scit.cosmetic.vo.CosMember;
 import global.scit.cosmetic.vo.Product;
-import global.scit.cosmetic.vo.ProductInfo;
 
 
 public interface CosmeticMapper {
@@ -13,18 +13,18 @@ public interface CosmeticMapper {
 	public int updateMember(CosMember member); //회원수정
 	
 	public CosMember selectMember(String usrId);//회원 조회
-	public int deleteMember(CosMember member);//회원 탈퇴
+	//public int deleteMember(CosMember member);//회원 탈퇴
 	public List<CosMember> memberAll(); //회원 전체조회 
 	public int checklogin(String usrId,String usrPw); //회원 로그인 
 	
 		
 	public Product selectProduct(String productid); //화장품 조회
 	public int insertProduct(Product product); //화장품 등록
-	public int updateProduct(Product product); //화장품 수정
+	public int updateProduct(Map<String, Object> map); //화장품 수정
 	public int deleteProduct(String productid); //화장품 삭제
 	
 	public List<Product> productAll(); //화장품 전체조회		
-	public CosMember deleteMember(String usrid);
+	public int  deleteMember(String usrid);
 }
 
 /**

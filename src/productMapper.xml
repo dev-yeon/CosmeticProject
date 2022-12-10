@@ -5,11 +5,39 @@
 
 <mapper namespace="global.scit.member.dao.CosmeticMapper">
 
+	<select id="loginMember" resultType="CosMember"
+			parameterType="String">
+		SELECT
+		c.usrid
+		,c.password
+		FROM
+		cosmember c
+		WHERE
+		usrid =  #{usrid}
+		AND
+		password = #{password}
+	</select>
+	<select id="selectMember" resultType="CosMember"
+			parameterType="String">
+		SELECT
+		c.usrid
+		,c.usrname
+		,c.email
+		,c.usrrole
+		,s.skinproblem
+		,s.usrid
+		FROM
+		cosmember c , cosproduct p, memberskininfo s
+		WHERE
+		usrid = #{usrid}
+		AND
+		usrpass = # {usrpass}
+	</select>
 <select id="selectProduct" resultType="Product" 
         parameterType="String">
 		SELECT
-		
-		p.productname
+		p.productid
+		,p.productname
 		,p.producttype
 		,p.productsolution
 		,s.skinproblem
@@ -17,32 +45,46 @@
 		FROM
 		cosmember c , cosproduct p, memberskininfo s
 		WHERE
-		usrid = #{usrid}
+	productid = #{productid}
 		AND
-		usrpass=#{usrpass}
+	productid=#{productid}
 		</select>
 <insert id= "insertProduct" parameterType ="Product">
 	INSERT INTO 
 		cosproduct
-	VALUES(#{productid},#{productname},#{productprice}, #{producttype}, #{usrpass}, #{productsolution})
+	VALUES(#{productid},#{productname},#{productprice}, #{producttype}, #{productsolution})
 </insert>
-
+	<insert id= "insertMember" parameterType ="CosMember">
+		INSERT INTO
+		cosmember
+		VALUES(#{usrid},#{password},#{usrname}, #{email}, #{skinproblem}, #{usrrole})
+	</insert>
 
 	<update id="updateProduct" parameterType="Product">
 	UPDATE cosproduct
 	SET productid =#{productid}
 	WHERE productid =#{productid}	
 	</update>
-	
+	<update id="updateMember" parameterType="CosMember">
+		UPDATE cosmember
+		SET usrid =#{usrid}
+		WHERE usrid =#{usrid}
+	</update>
 	<delete id="deleteProduct" parameterType="string">
 	DELETE cosproduct
 	where 
 	productid = #{productid}
 	</delete>
+	<delete id="deleteMember" parameterType="string">
+		DELETE cosmember
+		where
+		usrid= #{usrid}
+	</delete>
 	
-	<select id="ProductAll" resultType="Product">
+	<select id="productAll" resultType="Product">
 		SELECT
-	     p.productname
+		 p.productid
+		,p.productname
 		,p.producttype
 		,p.productsolution
 		,s.skinproblem
@@ -51,6 +93,20 @@
 		WHERE
 		productid = #{productid}
 		
+	</select>
+
+	<select id="memberAll" resultType="CosMember">
+		SELECT
+		c.usrid
+		,c.usrname
+		,c.email
+		,c.usrrole
+		,s.skinproblem
+		,s.usrid
+		FROM
+		cosmember c , cosproduct p, memberskininfo s
+		WHERE
+		usrid = #{usrid}
 	</select>
 
 </mapper>
