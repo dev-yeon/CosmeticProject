@@ -21,10 +21,12 @@ public class CosmeticService {
         return result;
     }
     //회원수정
-    public int updateMember(CosMember member) {
-        int result =dao.updateMember(member);
+    public int updateMember(Map<String, Object> map) {
+        int result =dao.updateMember(map);
         return result;
     }
+
+
     //회원조회
     public CosMember selectMember(String usrid) {
         CosMember member = dao.selectMember(usrid);
@@ -60,6 +62,7 @@ public class CosmeticService {
         int result= dao.deleteProduct(productid);
         return result;
     }
+
     //화장품 전체조회
     public List<Product> productAll(){
         List<Product> list =dao.productAll();

@@ -30,11 +30,11 @@ public class CosmeticDAO {
         return result;
     };
     //회원수정 --
-    public int updateMember(CosMember member) {
+    public int updateMember(Map<String, Object> map) {
         SqlSession session = null;
         session = factory.openSession();
         CosmeticMapper mapper = session.getMapper(CosmeticMapper.class);
-        int result = mapper.updateMember(member);
+        int result = mapper.updateMember(map);
         session.commit();
         return result;
     };

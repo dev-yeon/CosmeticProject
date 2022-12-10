@@ -1,5 +1,6 @@
 package global.scit.cosmetic.ui;
 
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import global.scit.cosmetic.service.CosmeticService;
 import global.scit.cosmetic.vo.CosMember;
 import global.scit.cosmetic.vo.Product;
@@ -110,6 +111,7 @@ public class CosmeticUI {
     }
 
     private void productAll() {
+
     }
 
     private void login() {
@@ -165,7 +167,7 @@ public class CosmeticUI {
         else
             System.out.println("삭제 작업 실패");
     }
-    private void updateProduct() {
+    /*private void updateProduct() {
         String productid;
         String productname = null;
         String choice;
@@ -280,11 +282,74 @@ public class CosmeticUI {
                     break;
                 // 0) 이 전 메뉴로 가기
                 case "0":
+                    System.out.println("이전메뉴로 이동합니다.");
                     return;
             }//switch
         }//while
     }//updateProduct()
-
+    *
+     */
+    private void updateProduct() {
+        String productid;
+        String productname;
+        String choice;
+        int productprice = 0;
+        int producttype = 0;
+        int productsolution = 0;
+        System.out.println("화장품의 정보를 수정합니다.");
+        System.out.println("수정할 화장품의 아이디를 입력해주세요.");
+        productid = sc.next();
+        Product product = service.selectProduct(productid);
+        if (product == null) {
+            System.out.println(" 중복된 제품이 있습니다. ");
+            return;
+        }
+        System.out.println(product + "를 수정합니다.");
+        productUpdateMenu();
+        Map<String, Object> map = new HashMap<>();
+        map.put("productid", productid);
+        String temp;
+        while (true) {
+            choice = sc.next();
+            switch (choice) {
+                case "1":// 1) 화장품 이름 수정
+                    temp = "1";
+                    System.out.println("수정할 화장품의 이름을 입력해주세요.");
+                    productname = sc.next();
+                    map.put("temp", temp);
+                    map.put("productname", productname);
+                    break;
+// 2) 화장품 가격 수정
+                case "2":
+                    temp = "2";
+                    System.out.println("수정할 화장품의 가격을 입력해주세요.");
+                    productprice = sc.nextInt();
+                    map.put("temp", temp);
+                    map.put("productprice", productprice);
+                    break;
+// 3) 화장품 타입 수정
+                case "3":
+                    temp = "3";
+                    System.out.println("수정할 화장품의 타입을 입력해주세요.");
+                    producttype = sc.nextInt();
+                    map.put("temp", temp);
+                    map.put("producttype", producttype);
+                    break;
+// 4) 화장품 기능 수정
+                case "4":
+                    temp = "4";
+                    System.out.println("수정할 화장품의 기능을 입력해주세요.");
+                    productsolution = sc.nextInt();
+                    map.put("temp", temp);
+                    map.put("productsolution", productsolution);
+                    break;
+// 0) 이 전 메뉴로 가기
+                case "5":
+                    return;
+            }// switch
+            int result = service.updateProduct(map);
+        } // while
+    }
     private void productUpdateMenu() {
         System.out.println("[화장품 정보 수정 메뉴]");
         System.out.println(" 1) 화장품 이름 수정 ");
@@ -294,6 +359,8 @@ public class CosmeticUI {
         System.out.println(" 0) 이 전 메뉴로 가기 ");
         System.out.println("\n수정할 번호를 입력해 주세요 : ");
     }
+
+
 
     private void insertProduct() {
         String productid;
@@ -414,13 +481,79 @@ public class CosmeticUI {
         login();
         while (login != null) { //login 된 상태에서.
 
+
+            Map<String,Object> map = new HashMap<>();
+            System.out.println(" > 수정할 회원의 아이디 입력 ");
+            usrid = sc.next();
+            map.put("usrid",usrid);
+            String temp;
             updatemenu(); //메뉴 띄우고
             choice = sc.next();
+
             switch (choice) {
                 case "1":
                     System.out.println(" 1) 회원 이름 수정 ");
-                    System.out.println(" > 수정할 회원의 아이디 입력 ");
-                    usrid = sc.next();
+                    temp="1";
+                    System.out.println(" > 수정할 회원의 이름 입력 ");
+                    usrname = sc.next();
+                    map.put("temp",temp);
+                    map.put("usrname",usrname);
+
+                    System.out.println(" 변경된 정보 :"+service.selectMember(usrid));
+                    break;
+
+                case "2":
+                    System.out.println("2) 비밀번호 수정 ");
+                    temp="2";
+                    System.out.println(" > 기존 비밀번호를 입력해주세요 ");
+                    password = sc.next();
+                    if (service.selectMember(usrid).getPassword().equals(password)) //기존비번과 입력한 비번이 같을 때.
+                    {
+                        System.out.println(" > 새로 입력하실 비밀번호를 입력해주세요 ");
+                        newpassword = sc.next();
+                        System.out.println(" > 비밀번호 확인 ");
+                        newpasswordcheck = sc.next();
+                    } else if (!Objects.requireNonNull(newpassword).equals(newpasswordcheck)) {
+                        System.out.println("비밀 번호를 다시 입력해주세요");
+                    }
+                    map.put("temp",temp);
+                    map.put("password",password);
+                    System.out.println("비밀번호 수정이 완료되었습니다. ");
+                    break;
+                case "3":
+                    System.out.println("3) 이메일 수정 ");
+                    temp="3";
+                    System.out.print(" 기존 이메일 : " + service.selectMember(usrid).getEmail());
+                    System.out.println("이메일을 다시 입력해주세요");
+                    email = sc.next();
+                    map.put("temp",temp);
+                    map.put("email",email);
+                    System.out.println("이메일 수정이 완료되었습니다. ");
+                    System.out.println(" 변경된 정보 :"+service.selectMember(usrid));
+                    break;
+
+
+                case "4":
+                    temp="4";
+                    System.out.println(" 4) 피부고민 수정 ");
+                    System.out.println(" >주요 관심사 선택");
+                    System.out.println(" 1) 미백 2) 노화 3) 여드름 ");
+
+                    skinproblem=sc.nextInt();
+
+                    map.put("temp",temp);
+                    map.put("skinproblem",skinproblem);
+                    System.out.println("피부 고민 수정이 완료되었습니다. ");
+
+                    System.out.println(" 변경된 정보 :"+service.selectMember(usrid));
+                    break;
+
+                case "0":
+                    System.out.println("이전메뉴로 이동합니다.");
+                    return;
+
+
+                    /*
                     CosMember info = service.selectMember(usrid);
                     if (info == null) {
                         System.out.println(" 해당하는 아이디가 없습니다. ");
@@ -429,8 +562,15 @@ public class CosmeticUI {
                     System.out.println("기존 이름 " + service.selectMember(usrid).getUsrname());
                     System.out.println(" 회원의 수정할 이름 입력 ");
                     usrname = sc.next();
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("usrid",usrid);
+                    String temp;
+
+
+                    }
+                    /*
                     CosMember m1 = new CosMember(usrid, null, usrname, null, skinproblem, usrrole);
-                    int result1 = service.updateMember(m1);
+                    int result1 = service.updateMember((Map<String, Object>) m1);
                     if (result1 == 1) {
                         System.out.println(" 이름 수정 성공");
                     } else {
@@ -456,7 +596,7 @@ public class CosmeticUI {
                     CosMember m2 = new CosMember(usrid, password, usrname, null, skinproblem, usrrole);
 
                     System.out.println("비밀 번호를 다시 입력해주세요");
-                    int result2 = service.updateMember(m2);
+                    int result2 = service.updateMember((Map<String, Object>) m2);
                     if (result2 == 1) {
                         System.out.println(" 이름 수정 성공");
                     } else {
@@ -469,7 +609,7 @@ public class CosmeticUI {
                     System.out.println("이메일을 다시 입력해주세요");
                     email = sc.next();
                     CosMember m3 = new CosMember(usrid, null, usrname = null, email, skinproblem, usrrole);
-                    int result3 = service.updateMember(m3);
+                    int result3 = service.updateMember((Map<String, Object>) m3);
                     if (result3 == 1) {
                         System.out.println(" 이름 수정 성공");
                     } else {
@@ -496,7 +636,7 @@ public class CosmeticUI {
                             //break;// exception이 터지지 않으면 밖으로 빠져나가도록 해준다.
                         }
                     CosMember m4 = new CosMember(usrid, null, usrname=null, null, skinproblem, usrrole);
-                    int result4 = service.updateMember(m4);
+                    int result4 = service.updateMember((Map<String, Object>) m4);
                     if (result4 == 1) {
                         System.out.println(" 관심사 수정 성공");
                     } else {
@@ -507,7 +647,7 @@ public class CosmeticUI {
                 case "0":
                     System.out.println("** 프로그램 종료합니다. ");
                     System.exit(1);
-                    return;
+                    return;*/
             }
         }//loginTrue
     }// updateMember()
