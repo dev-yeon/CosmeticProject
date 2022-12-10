@@ -105,12 +105,36 @@ public class CosmeticUI {
     }// CosmeticUI()
 
     private void memberAll() {
+        System.out.println("\n [전체 회원 조회] ");
+        List<CosMember> list = service.memberAll();
+
+        if (list.size() == 0) {
+            System.out.println("** 회원정보가 없습니다.");
+            return;
+        }
+        Iterator<CosMember> iter = list.iterator();
+
+        while (iter.hasNext()) {
+            System.out.println(iter.next());
+        }
 
 
 
     }
 
     private void productAll() {
+        System.out.println("\n [전체 상품 조회] ");
+        List<Product> list = service.productAll();
+
+        if (list.size() == 0) {
+            System.out.println("** 상품정보가 없습니다.");
+            return;
+        }
+        Iterator<Product> iter = list.iterator();
+
+        while (iter.hasNext()) {
+            System.out.println(iter.next());
+        }
 
     }
 
@@ -470,8 +494,8 @@ public class CosmeticUI {
         String newpassword = null;
         String newpasswordcheck = null;
         String usrname = null;
-        String email = null;
-        String choice = null;
+        String email;
+        String choice;
         int skinproblem = 1;
         int usrrole = 1;
         CosMember m = new CosMember(usrid, password, usrname, null, skinproblem, usrrole);
@@ -672,6 +696,7 @@ public class CosmeticUI {
         password = sc.next();
         System.out.println(" > 비밀번호 확인 ");
         repassword = sc.next();
+        System.out.println("1");
         if (!repassword.equals(password)) {
             System.out.println("비밀 번호를 다시 입력해주세요");
             return;
@@ -740,6 +765,7 @@ public class CosmeticUI {
         System.out.println(" 4) 피부고민 수정 ");
         System.out.println(" 0)  종료 ");
         System.out.println("-----------------------");
+        System.out.println("\n번호를 입력해 주세요 : ");
 
     }
     private void adminMenu() {
@@ -752,6 +778,7 @@ public class CosmeticUI {
         System.out.println(" 5)  화장품 삭제 ");
         System.out.println(" 0)  종료 ");
         System.out.println("-----------------------");
+        System.out.println("\n 번호를 입력해 주세요 : ");
     }
 
     private void userMenu() {
@@ -763,6 +790,7 @@ public class CosmeticUI {
         System.out.println(" 4) 회원 탈퇴 ");
         System.out.println(" 0)  종료 ");
         System.out.println("-----------------------");
+        System.out.println("\n번호를 입력해 주세요 : ");
 
     }
 
@@ -773,5 +801,6 @@ public class CosmeticUI {
         System.out.println(" 2) 신규회원 가입");
         System.out.println(" 0) 종료");
         System.out.println("-----------------------");
+        System.out.println("\n 번호를 입력해 주세요 : ");
     }
 }

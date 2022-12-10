@@ -1,5 +1,6 @@
 package global.scit.cosmetic.dao;
 
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import global.scit.cosmetic.vo.CosMember;
 import global.scit.cosmetic.vo.Product;
 import org.apache.ibatis.session.SqlSession;
@@ -23,9 +24,13 @@ public class CosmeticDAO {
     //회원 가입.한 사람의 정보를 입력.
     public int insertMember(CosMember member) {
         SqlSession session = null; //연결하는 객채는 SqlSession
+        System.out.println(" in");
         session = factory.openSession(); //연결되면 session객체의 주소가 넘어가.
+        System.out.println(" in2");
         CosmeticMapper mapper = session.getMapper(CosmeticMapper.class);
+        System.out.println(" in3");
         int result = mapper.insertMember(member);
+        System.out.println(" in4");
         session.commit(); // 이 코드를 써줘야지 저장이 된다. 저장한 뒤에 close 해주는 것.
         return result;
     };
@@ -76,7 +81,9 @@ public class CosmeticDAO {
         SqlSession session = null;
         session = factory.openSession();
         CosmeticMapper mapper = session.getMapper(CosmeticMapper.class);
+        System.out.println("2");
         int result = mapper.insertProduct(product);
+        System.out.println("3");
         return result;
     };
     //화장품 수정

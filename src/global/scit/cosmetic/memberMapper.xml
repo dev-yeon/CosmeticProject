@@ -2,77 +2,98 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <!-- namespace에는 interface명을 기재하면 된다. 여기에 dao.UsrDAO.java 처럼 확장명까지 쓰면 반드시
-오류난다.. -->
+	오류난다.. -->
 <!-- 근데 패키지명은 써야함. source에 파일을 쓸 때는 확장명 써야하는데, 클래스 작성할때는 쓰면 안된다. -->
 <!-- select문에 세미콜론 절대로 치면 안돼. 그럼 오류나!!! select id에는 메서드 명 쓰면 된다 -->
+
 <mapper namespace="global.scit.cosmetic.dao.CosmeticMapper">
-	<select id="loginMember" parameterType="CosMember" resultType="CosMember">
-		SELECT * FROM COSMEMBER
-		WHERE
-		usrid = #{usrid}
-		AND
-		password =#{password}
-	</select>
 
 	<insert id="insertMember" parameterType="CosMember">
 		INSERT INTO cosmember
 		VALUES(#{usrid},#{usrpass},#{usrname}, #{email},#{solution})
+
 	</insert>
+
+
 	<select id="selectMember" parameterType="string"
 			resultType="CosMember">
+
 		SELECT * FROM COSMEMBER
 		WHERE
 		usrid = #{usrid}
+
 	</select>
+
 	<select id="memberAll" parameterType="string"
 			resultType="CosMember">
+
+
 		SELECT * FROM COSMEMBER
+
+
 	</select>
+
 	<delete id="deleteMember" parameterType="string">
+
 		DELETE FROM
 		cosmember
 		WHERE
 		usrid = #{usrid}
+
 	</delete>
-	<update id="updateMember" parameterType="map">
+
+	<update id="updateMember"  parameterType="map">
 		Update COSMEMBER
 		SET
 		<if test = "temp == '1'">
-			productname = #{productname}
+			password = #{password}
 		</if>
 		<if test = "temp == '2'">
-			productprice = #{productprice}
+			name = #{name}
 		</if>
 		<if test = "temp == '3'">
-			productprice = #{productprice}
+			skinproblem = #{skinproblem}
 		</if>
-		<if test = "temp == '4'">
-			productprice = #{productprice}
-		</if>
-		WHERE product_id = #{productid}
+
+		WHERE usrid = #{usrid}
 	</update>
+
+
+
+
+
+
 	<insert id="insertProduct" parameterType="Product">
 		INSERT INTO cosproduct
-		VALUES()
+		VALUES(#{productid},#{productname},#{productprice}, #{producttype},#{productsolution})
 	</insert>
+
 	<select id="selectProduct" parameterType="string" resultType="Product">
-		SELECT * FROM COSMEMBER
+		SELECT * FROM cosproduct
 		WHERE
 		productid = #{productid}
+
 	</select>
+
 	<select id="productAll" parameterType="string"
 			resultType="Product">
-		SELECT * FROM product
+		SELECT * FROM cosproduct
+
 	</select>
+
 	<delete id="deleteProduct" parameterType="string">
 		DELETE FROM
-		Product
+		cosproduct
 		WHERE
 		productid = #{productid}
+
 	</delete>
+
+
 	<update id="updateProduct" parameterType="map">
-		Update product
+		Update cosproduct
 		SET
 		<if test = "temp == '1'">
 			productname = #{productname}
@@ -88,4 +109,7 @@
 		</if>
 		WHERE product_id = #{productid}
 	</update>
+
+
+
 </mapper>

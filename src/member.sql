@@ -1,9 +1,7 @@
 	select
 		 c.usrid
-	
 		,c.usrname
 	    ,c.email
-	
 	    ,s.usrid
 		,s.skinproblem
 	
@@ -15,6 +13,3 @@
 	c.usrid =s.usrid
 		and
 		c.usrid = #{usrid}
-		
-		
-		
