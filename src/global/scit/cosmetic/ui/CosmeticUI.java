@@ -27,7 +27,7 @@ public class CosmeticUI {
                     insertMember();//신규회원 가입
                     break;
                 case "0": {
-                    System.out.println("* 프로그램 종료합니다. ");
+                    System.out.println("** 프로그램 종료합니다. ");
                     System.exit(1);
                     break;
                 }
