@@ -8,7 +8,6 @@
 
 <typeAliases>
 <typeAlias type ="global.scit.cosmetic.vo.CosMember" alias="CosMember" />
-<typeAlias type ="global.scit.cosmetic.vo.MemberSkinInfo" alias="MemberSkinInfo" />
 <typeAlias type ="global.scit.cosmetic.vo.Product" alias="Product" />
 </typeAliases>
 	<environments default="development">

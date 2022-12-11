@@ -22,7 +22,6 @@ public class MybatisConfig {
 			e.printStackTrace();
 		}
 	}
-	
 	public static SqlSessionFactory getSessionFactory() {
 		return sqlSessionFactory;
 	}

@@ -40,30 +40,40 @@ public class Product {
 	public int getProductprice() {
 		return productprice;
 	}
-
 	public void setProductprice(int productprice) {
 		this.productprice = productprice;
 	}
-
 	public int getProducttype() {
 		return producttype;
 	}
-
 	public void setProducttype(int producttype) {
 		this.producttype = producttype;
 	}
-
 	public int getProductsolution() {
 		return productsolution;
 	}
-
 	public void setProductsolution(int productsolution) {
 		this.productsolution = productsolution;
 	}
-
 	@Override
 	public String toString() {
-		return "productid : " + productid + ", productname : " + productname + ", productprice : " + productprice
-				+ ", producttype : " + producttype + ", productsolution : " + productsolution;
+		String result = "productid : " + productid + ", productname : " + productname + ", productprice : " + productprice;
+		result += ", producttype : ";
+		if(producttype==1){
+			result += "세럼";
+		}else if(producttype==2){
+			result += "크림";
+		}else if(producttype==3){
+			result += "마스크";
+		}
+		result += ", productsolution : ";
+		if(productsolution ==1){
+			result += "미백";
+		}else if(productsolution ==2){
+			result += "노화";
+		}else if(productsolution ==3){
+			result += "여드름";
+		}
+		return result;
 	}
 }

@@ -30,34 +30,27 @@ public class CosMember {
 	public void setUsrid(String usrid) {
 		this.usrid = usrid;
 	}
-
 	public String getUsrpass() {
 		return usrpass;
 	}
-
 	public void setUsrpass(String usrpass) {
 		this.usrpass = usrpass;
 	}
-
 	public String getUsrname() {
 		return usrname;
 	}
-
 	public void setUsrname(String usrname) {
 		this.usrname = usrname;
 	}
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public int getSkinproblem() {
 		return skinproblem;
 	}
-
 	public void setSkinproblem(int skinproblem) {
 		this.skinproblem = skinproblem;
 	}
@@ -65,14 +58,21 @@ public class CosMember {
 	public int getUsrrole() {
 		return usrrole;
 	}
-
 	public void setUsrrole(int usrrole) {
 		this.usrrole = usrrole;
 	}
-
 	@Override
 	public String toString() {
-		return " \n 회원의 usrid = " + usrid + ", password = " + usrpass + ", usrname = " + usrname + "email = "+email+ ", 관심사 = " + skinproblem
-				+ ", usrrole = "+usrrole;
+		String result =" 회원의 usrid = " + usrid +", usrname = " + usrname + "email = "+email+
+				 ", usrrole = "+usrrole;
+		result +=  ", 관심사 = " + skinproblem;
+		if(skinproblem==1){
+			result += "미백";
+		}else if(skinproblem==2){
+			result += "노화";
+		}else if(skinproblem==3){
+			result += "여드름";
+		}
+		return result;
 	}
 }

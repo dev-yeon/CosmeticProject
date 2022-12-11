@@ -52,7 +52,7 @@
 		Update COSMEMBER
 		SET
 		<if test = "temp == '1'.toString()">
-			usrname = #{name}
+			usrname = #{usrname}
 		</if>
 		<if test = "temp == '2'.toString()">
 			usrpass = #{newpassword}
@@ -84,6 +84,23 @@
 
 	</select>
 
+	<select id="selectProductByProblem" resultType="Product"
+			parameterType="Int">
+		SELECT
+		p.productid
+		,p.productname
+		,p.productprice
+		,p.producttype
+		,p.productsolution
+
+		FROM
+		cosproduct p
+		WHERE
+		productsolution=#{skinproblem}
+		ORDER BY productprice
+
+	</select>
+
 	<delete id="deleteProduct" parameterType="string">
 		DELETE FROM
 		cosproduct
@@ -110,7 +127,4 @@
 		</if>
 		WHERE product_id = #{productid}
 	</update>
-
-
-
 </mapper>

@@ -44,8 +44,6 @@ public class CosmeticUI {
             }//switch
         }//whilewhile(!login);
         // 일반회원메뉴
-        System.out.println(login.toString());
-
         if(login.getUsrrole() == 0 ){ // 일반 회원
             while (true) {
                 userMenu();
@@ -60,7 +58,11 @@ public class CosmeticUI {
                     case "3":
                         productAll(); // 화장품 전체조회
                         break;
+
                     case "4":
+                        selectProductByProblem(); // 화장품 관심사별로 조회
+                        break;
+                    case "5":
                         deleteMember(); // 내 탈퇴
                         break;
                     case "0": {
@@ -114,10 +116,24 @@ public class CosmeticUI {
             System.out.println("");
         }
     }// CosmeticUI()
-    private void memberAll() {
-        System.out.println("\n [전체 회원 조회] ");
-        List<CosMember> list = service.memberAll();
 
+    private void selectProductByProblem() {
+        System.out.println(" [ 나의 피부고민별로 화장품 조회] ");
+        List<Product> list = service.selectProductByProblem(login.getSkinproblem());
+        System.out.println(" ");
+        if (list.size() == 0) {
+            System.out.println("** 화장품정보가 없습니다.");
+            return;
+        }
+        Iterator<Product> iter = list.iterator();
+        while (iter.hasNext()) {
+            System.out.println(iter.next());
+        }
+    }
+
+    private void memberAll() {
+        System.out.println(" [전체 회원 조회] ");
+        List<CosMember> list = service.memberAll();
         if (list.size() == 0) {
             System.out.println("** 회원정보가 없습니다.");
             return;
@@ -327,8 +343,8 @@ public class CosmeticUI {
     }
     private void selectMember() {
         String usrid;
-        System.out.println(" [제품 정보 조회] ");
-        System.out.println("> 제품 아이디 ");
+        System.out.println(" [회원 정보 조회] ");
+        System.out.println("> 회원 아이디 ");
         usrid = sc.next();
         CosMember member = service.selectMember(usrid);
         if (member == null) {
@@ -339,11 +355,11 @@ public class CosmeticUI {
     }
     private void deleteMember() {
         String usrid, answer;
-        System.out.println(" > 아이디 입력 ");
+        System.out.println(" > 내 아이디 입력 : ");
         usrid = sc.next();
-        CosMember member = service.selectMember(usrid);
-        if (member == null) {
-            System.out.println("해당하는 아이디가 없습니다.");
+
+        if (!login.getUsrid().equals(usrid)) {
+            System.out.println("아이디가 일치하지 않습니다.");
             return;
         }
         System.out.println("정말 삭제하시겠습니까? (Y/n)");
@@ -382,22 +398,31 @@ public class CosmeticUI {
         String choice;
         int skinproblem = 1;
         int usrrole = 1;
-        CosMember m = new CosMember(usrid, password, usrname, null, skinproblem, usrrole);
+
         System.out.println(" [정보 수정] ");
         System.out.println("나의 회원 정보를 수정합니다.");
         System.out.println("다시 로그인 해주세요.");
-        login();
+
+        System.out.println("ID 입력");
+        String newId = sc.next();
+        System.out.println("PW 입력");
+        String newPw = sc.next();
+        CosMember newMember = service.loginMember(newId, newPw);
+        if(newMember == null) {
+            System.out.println("ID나 PW를 확인해주세요.");
+            return;
+        } else if (!newMember.getUsrid().equals(login.getUsrid())) {
+            System.out.println("ID나 PW를 확인해주세요.");
+            return;
+        }
         while (login != null) { //login 된 상태에서.
-
-
             Map<String,Object> map = new HashMap<>();
             //System.out.println(" > 수정할 회원의 아이디 입력 ");
            // usrid = sc.next();
-            map.put("usrid",usrid); //아이디를 한번 더 입력하는게 아니라, 갖고있는 정보로 어쩌구.
+            map.put("usrid", usrid); //아이디를 한번 더 입력하는게 아니라, 갖고있는 정보로 어쩌구.
             String temp;
             updatemenu(); //메뉴 띄우고
             choice = sc.next();
-
             switch (choice) {
                 case "1":
                     System.out.println(" 1) 회원 이름 수정 ");
@@ -407,6 +432,7 @@ public class CosmeticUI {
                     map.put("temp",temp);
                     map.put("usrname",usrname);
                     service.updateMember(map);
+                    login.setUsrname(usrname);
                     System.out.println(" 변경된 정보 :"+service.selectMember(usrid));
                    return;
 
@@ -427,6 +453,7 @@ public class CosmeticUI {
                     map.put("temp",temp);
                     map.put("newpassword",newpassword);
                     service.updateMember(map);
+                    login.setUsrpass(newpassword);
                     System.out.println("비밀번호 수정이 완료되었습니다. ");
                     return;
                 case "3":
@@ -439,6 +466,7 @@ public class CosmeticUI {
                     map.put("email",email);
                     System.out.println("이메일 수정이 완료되었습니다. ");
                     service.updateMember(map);
+                    login.setEmail(email);
                     System.out.println(" 변경된 정보 :"+service.selectMember(usrid));
 
                     return;
@@ -454,10 +482,9 @@ public class CosmeticUI {
                     map.put("skinproblem",skinproblem);
                     System.out.println("피부 고민 수정이 완료되었습니다. ");
                     service.updateMember(map);
-
+                    login.setSkinproblem(skinproblem);
                     System.out.println(" 변경된 정보 :"+service.selectMember(usrid));
                     return;
-
                 case "0":
                     System.out.println("이전메뉴로 이동합니다.");
                     return;
@@ -483,7 +510,6 @@ public class CosmeticUI {
         password = sc.next();
         System.out.println(" > 비밀번호 확인 ");
         repassword = sc.next();
-        System.out.println("1");
         if (!repassword.equals(password)) {
             System.out.println("비밀 번호를 다시 입력해주세요");
             return;
@@ -496,7 +522,6 @@ public class CosmeticUI {
         while (true) {
             System.out.println(" > 주요 관심사 목록");
             System.out.println(" 1) 미백 2) 노화 3) 여드름 ");
-            System.out.println();
             System.out.println(" > 주요 관심사 선택");
             try {
                 skinproblem = sc.nextInt();
@@ -510,9 +535,7 @@ public class CosmeticUI {
             }
             break; // exception이 터지지 않으면 밖으로 빠져나가도록 해준다.
         }
-
         CosMember m;
-
         if (password.indexOf("A") == 0) //password의 첫자가 A면 관리자 1
         {
             m = new CosMember(usrid, password, usrname, email, skinproblem, 1); //관리자
@@ -533,44 +556,43 @@ public class CosmeticUI {
         }
     }
     private void updatemenu() {
-        System.out.println("-----------------------");
-        System.out.println(" 수정 메뉴 ");
+        System.out.println("------- 수정 메뉴 -------");
         System.out.println(" 1) 회원 이름 수정 ");
         System.out.println(" 2) 비밀번호 수정 ");
         System.out.println(" 3) 이메일 수정 ");
         System.out.println(" 4) 피부고민 수정 ");
         System.out.println(" 0)  종료 ");
-        System.out.println("-----------------------");
-
+        System.out.println(">>>");
     }
+
     private void adminMenu() {
-        System.out.println("-----------------------");
-        System.out.println(" 관리자 메뉴 ");
-        System.out.println(" 1)  회원 조회 ");
+        System.out.println("------  관리자 메뉴  ------");
+        System.out.println(" 1)  회원 정보 조회 ");
         System.out.println(" 2)  회원 정보 수정 ");
         System.out.println(" 3)  화장품 등록 ");
         System.out.println(" 4)  화장품 수정 ");
         System.out.println(" 5)  화장품 삭제 ");
+        System.out.println(" 6)  화장품 전체조회 ");
+        System.out.println(" 7)  회원  전체 조회 ");
         System.out.println(" 0)  종료 ");
-        System.out.println("-----------------------");
-
+        System.out.println(">>>");
     }
     private void userMenu() {
-        System.out.println("-----------------------");
+        System.out.println("------- 회원 메뉴 -------");
         System.out.println(" 회원 메뉴 ");
         System.out.println(" 1) 내 정보 수정 ");
         System.out.println(" 2) 화장품 조회 ");
         System.out.println(" 3) 화장품 전체조회 ");
-        System.out.println(" 4) 회원 탈퇴 ");
+        System.out.println(" 4) 화장품 관심사별로 조회  ");
+        System.out.println(" 5) 회원 탈퇴 ");
         System.out.println(" 0)  종료 ");
-        System.out.println("-----------------------");
+        System.out.println(">>>");
     }
     private void startMenu() {
-        System.out.println("-----------------------");
-        System.out.println(" 초기 메뉴");
+        System.out.println("-------- 초기 메뉴 ------");
         System.out.println(" 1) 기존회원 로그인");
         System.out.println(" 2) 신규회원 가입");
         System.out.println(" 0) 종료");
-        System.out.println("-----------------------");
+        System.out.println(">>>");
     }
 }

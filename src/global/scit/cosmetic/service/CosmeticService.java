@@ -69,4 +69,11 @@ public class CosmeticService {
         List<Product> list =dao.productAll();
         return list;
     }
+    //화장품 관심사 선택하면 다 뽑기.
+    public List<Product> selectProductByProblem(int skinproblem)
+    {
+        List<Product> list =dao.selectProductByProblem(skinproblem);
+
+        return list;
+    }
 }
