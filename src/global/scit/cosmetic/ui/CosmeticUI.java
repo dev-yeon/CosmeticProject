@@ -94,6 +94,8 @@ public class CosmeticUI {
                         updateProduct(); // 화장품 수정
                         break;
                     case "5":
+                        System.out.println("[삭제할 화장품의 아이디를 입력해주세요.]");
+                        productAll(); // 화장품 전체조회
                         deleteProduct(); // 화장품 삭제
                         break;
                     case "6":
@@ -101,6 +103,11 @@ public class CosmeticUI {
                         break;
                     case "7":
                         memberAll(); //회원 전체 조회
+                        break;
+                    case "8":
+                        System.out.println("[삭제할 회원의 아이디를 입력해주세요.]");
+                        memberAll();
+                        deleteMember(); //회원 삭제
                         break;
                     case "0": {
                         System.out.println("** 프로그램 종료합니다. ");
@@ -176,11 +183,12 @@ public class CosmeticUI {
             usrpass = sc.next();
 
             login = service.loginMember(usrid, usrpass);
+            //로그인에서 유저 아이디와 입력한 패스워드를 확인한다.
 
             if (login == null)
                 System.out.println(" 아이디 혹은 비밀번호를 확인하세요. ");
             else {
-                System.out.println(usrid + " 님께서 로그인 하셨습니다.");
+                System.out.println( usrid + " 님께서 로그인 하셨습니다.");
                 break;
             }
 
@@ -194,8 +202,8 @@ public class CosmeticUI {
 
     private void deleteProduct() {
         String productid, answer;
-        System.out.println(" \n화장품 삭제 ");
-        System.out.println(" c> 제품 입력 : ");
+        System.out.println(" 화장품 삭제 ");
+        System.out.println(" >> 제품 아이디 입력 : ");
         productid = sc.next();
         Product product = service.selectProduct(productid);
         if (product == null) {
@@ -227,10 +235,11 @@ public class CosmeticUI {
         productid = sc.next();
         Product product = service.selectProduct(productid);
         if (product == null) {
-            System.out.println(" 중복된 제품이 있습니다. ");
+            System.out.println(" 제품이 없습니다. ");
             return;
         }
-        System.out.println(product + "를 수정합니다.");
+        System.out.println("[수정할 화장품 정보]");
+        System.out.println(product + "\n를 수정합니다.");
         productUpdateMenu();
         Map<String, Object> map = new HashMap<>();
         map.put("productid", productid);
@@ -240,50 +249,56 @@ public class CosmeticUI {
             switch (choice) {
                 case "1":// 1) 화장품 이름 수정
                     temp = "1";
-
+                    System.out.println("이전 화장품의 이름: "+product.getProductname(productid));
                     System.out.println("새로 수정할 화장품의 이름을 입력해주세요.");
                     productname = sc.next();
                     map.put("temp", temp);
                     map.put("productname", productname);
                     product.setProductname(productname);
-                    System.out.println("새로 수정된 화장품이름" + product.getProductname(productid));
-                    break;
+                    int result1 = service.updateProduct(map);
+                    System.out.println("새로 수정된 화장품이름 :" + product.getProductname(productid));
+                    return;
 // 2) 화장품 가격 수정
                 case "2":
                     temp = "2";
+                    System.out.println("이전 화장품의 가격: "+product.getProductprice());
                     System.out.println("새로 수정할 화장품의 가격을 입력해주세요.");
                     productprice = sc.nextInt();
                     map.put("temp", temp);
                     map.put("productprice", productprice);
-                  product.setProductprice(productprice);
-                    System.out.println(" 새로 수정된 화장품가격 "+product.getProductprice());
+                    product.setProductprice(productprice);
+                    int result2 = service.updateProduct(map);
+                    System.out.println(" 새로 수정된 화장품가격 :"+product.getProductprice());
                     return;
 // 3) 화장품 타입 수정
                 case "3":
                     temp = "3";
+                    System.out.println("이전 화장품의 타입: "+product.getProducttype());
                     System.out.println("새로 수정할 화장품의 타입을 입력해주세요. 1) 세럼, 2)크림, 3)마스크");
                     producttype = sc.nextInt();
                     map.put("temp", temp);
                     map.put("producttype", producttype);
-
                     product.setProducttype(producttype);
-                    System.out.println("새로 수정된 화장품타입 "+product.getProducttype());
+                    int result3 = service.updateProduct(map);
+                    System.out.println("새로 수정된 화장품타입 : "+product.getProducttype());
                     return;
 // 4) 화장품 기능 수정
                 case "4":
                     temp = "4";
+                    System.out.println("이전 화장품의 주요기능 : "+product.getProductsolution());
+                    System.out.println("새로 수정할 화장품기능 1)미백, 2)노화방지, 3)여드름");
                     productsolution = sc.nextInt();
                     map.put("temp", temp);
                     map.put("productsolution", productsolution);
-                  //  int result4 = service.updateProduct(map);
                     product.setProductsolution(productsolution);
-                    System.out.println("새로 수정할 화장품기능 1)미백, 2)노화방지, 3)여드름"+product.getProductsolution());
+                    int result4 = service.updateProduct(map);
+                    System.out.println("새로 수정된 화장품기능 1)미백, 2)노화방지, 3)여드름"+product.getProductsolution());
                     return;
 // 0) 이 전 메뉴로 가기
                 case "5":
                     return;
+
             }// switch
-            int result = service.updateProduct(map);
 
         } // while
     }
@@ -294,7 +309,7 @@ public class CosmeticUI {
         System.out.println(" 3) 화장품 타입 수정 ");
         System.out.println(" 4) 화장품 기능 수정 ");
         System.out.println(" 0) 이 전 메뉴로 가기 ");
-        System.out.println("\n수정할 번호를 입력해 주세요 : ");
+        System.out.print(">>> ");
     }
 
     private void insertProduct() {
@@ -318,7 +333,7 @@ public class CosmeticUI {
         productprice = sc.nextInt();
         while (true) {
             System.out.println(" > 제품 타입 입력 ");
-            System.out.println(" 1)크림형 2)세렴형 3)마스크형 ");
+            System.out.println(" 1).크림형  2).세렴형  3).마스크형 ");
             try {
                 producttype = sc.nextInt();
                 if (!(producttype >= 1 && producttype <= 3)) {
@@ -329,12 +344,7 @@ public class CosmeticUI {
                 sc.nextLine();
                 continue; // 다시 입력받도록 간다.
             }
-
-
-
             break; // exception이 터지지 않으면 밖으로 빠져나가도록 해준다.
-
-
         }
         while (true) {
             System.out.println(" > 제품 목적 입력 ");
@@ -371,7 +381,7 @@ public class CosmeticUI {
     }
     private void deleteMember() {
         String usrid, answer;
-        System.out.println(" > 내 아이디 입력 : ");
+        System.out.println(" >  삭제할 아이디 입력 : ");
         usrid = sc.next();
 
         if (!login.getUsrid().equals(usrid)) {
@@ -412,6 +422,7 @@ public class CosmeticUI {
         String usrname = null;
         String email;
         String choice;
+
         int skinproblem = 1;
         int usrrole = 1;
 
@@ -457,14 +468,14 @@ public class CosmeticUI {
                     temp="2";
                     System.out.println(" > 기존 비밀번호를 입력해주세요 ");
                     password = sc.next();
-                    if (service.selectMember(usrid).getUsrpass().equals(login.getUsrpass())) //기존비번과 입력한 비번이 같을 때.
+                    if (service.selectMember(usrid).getUsrpass().equals(password)) //기존비번과 입력한 비번이 같을 때.
                     {
                         System.out.println(" > 새로 입력하실 비밀번호를 입력해주세요 ");
                         newpassword = sc.next();
                         System.out.println(" > 비밀번호 확인 ");
                         newpasswordcheck = sc.next();
                     } else if (!newpassword.equals(newpasswordcheck)) {
-                        System.out.println("비밀 번호를 다시 입력해주세요");
+                        System.out.println("비밀 번호를 다시 확인해주세요.");
                     }
                     map.put("temp",temp);
                     map.put("newpassword",newpassword);
@@ -504,7 +515,9 @@ public class CosmeticUI {
                 case "0":
                     System.out.println("이전메뉴로 이동합니다.");
                     return;
+
             }
+
         }//loginTrue
     }// updateMember()
     private void insertMember() {
@@ -590,6 +603,7 @@ public class CosmeticUI {
         System.out.println(" 5)  화장품 삭제 ");
         System.out.println(" 6)  화장품 전체조회 ");
         System.out.println(" 7)  회원  전체 조회 ");
+        System.out.println(" 8)  회원  삭제 ");
         System.out.println(" 0)  종료 ");
         System.out.println(">>>");
     }

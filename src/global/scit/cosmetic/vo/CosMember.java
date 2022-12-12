@@ -63,15 +63,15 @@ public class CosMember {
 	}
 	@Override
 	public String toString() {
-		String result =" 회원의 usrid = " + usrid +", usrname = " + usrname + "email = "+email+
+		String result =" 회원의 usrid = " + usrid +", usrname = " + usrname + ", email = "+email+
 				 ", usrrole = "+usrrole;
 		result +=  ", 관심사 = " + skinproblem;
 		if(skinproblem==1){
-			result += "미백";
+			result += " = 미백";
 		}else if(skinproblem==2){
-			result += "노화";
+			result += " = 노화";
 		}else if(skinproblem==3){
-			result += "여드름";
+			result += " = 여드름";
 		}
 		return result;
 	}
