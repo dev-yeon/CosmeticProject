@@ -240,41 +240,45 @@ public class CosmeticUI {
             switch (choice) {
                 case "1":// 1) 화장품 이름 수정
                     temp = "1";
-                    System.out.println("수정할 화장품의 이름을 입력해주세요.");
+
+                    System.out.println("새로 수정할 화장품의 이름을 입력해주세요.");
                     productname = sc.next();
                     map.put("temp", temp);
                     map.put("productname", productname);
                     product.setProductname(productname);
+                    System.out.println("새로 수정된 화장품이름" + product.getProductname(productid));
                     break;
 // 2) 화장품 가격 수정
                 case "2":
                     temp = "2";
-                    System.out.println("수정할 화장품의 가격을 입력해주세요.");
+                    System.out.println("새로 수정할 화장품의 가격을 입력해주세요.");
                     productprice = sc.nextInt();
                     map.put("temp", temp);
                     map.put("productprice", productprice);
-                  //  product.setProductprice(productprice);
-                    break;
+                  product.setProductprice(productprice);
+                    System.out.println(" 새로 수정된 화장품가격 "+product.getProductprice());
+                    return;
 // 3) 화장품 타입 수정
                 case "3":
                     temp = "3";
-                    System.out.println("수정할 화장품의 타입을 입력해주세요.");
+                    System.out.println("새로 수정할 화장품의 타입을 입력해주세요. 1) 세럼, 2)크림, 3)마스크");
                     producttype = sc.nextInt();
                     map.put("temp", temp);
                     map.put("producttype", producttype);
-                   // int result3 = service.updateProduct(map);
+
                     product.setProducttype(producttype);
-                    break;
+                    System.out.println("새로 수정된 화장품타입 "+product.getProducttype());
+                    return;
 // 4) 화장품 기능 수정
                 case "4":
                     temp = "4";
-                    System.out.println("수정할 화장품의 기능을 입력해주세요.");
                     productsolution = sc.nextInt();
                     map.put("temp", temp);
                     map.put("productsolution", productsolution);
                   //  int result4 = service.updateProduct(map);
                     product.setProductsolution(productsolution);
-                    break;
+                    System.out.println("새로 수정할 화장품기능 1)미백, 2)노화방지, 3)여드름"+product.getProductsolution());
+                    return;
 // 0) 이 전 메뉴로 가기
                 case "5":
                     return;
