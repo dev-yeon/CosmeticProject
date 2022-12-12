@@ -81,6 +81,7 @@ public class CosmeticDAO {
         session = factory.openSession();
         CosmeticMapper mapper = session.getMapper(CosmeticMapper.class);
         int result = mapper.insertProduct(product);
+        session.commit();
         return result;
     };
     //화장품 수정

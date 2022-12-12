@@ -110,7 +110,7 @@
 	</delete>
 
 
-	<update id="updateProduct" parameterType="map">
+	<update id="updateProduct" parameterType="hashMap">
 		Update cosproduct
 		SET
 		<if test = "temp == '1'.toString()">
@@ -125,6 +125,6 @@
 		<if test = "temp == '4'.toString()">
 			productprice = #{productprice}
 		</if>
-		WHERE product_id = #{productid}
+		WHERE productid = #{productid}
 	</update>
 </mapper>

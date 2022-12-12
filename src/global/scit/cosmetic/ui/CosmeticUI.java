@@ -15,6 +15,7 @@ public class CosmeticUI {
     Scanner sc = new Scanner(System.in);
     CosmeticService service = new CosmeticService();
     CosMember login = null;
+    Product product = null;
 
     Map<String, Object> map = new HashMap<String, Object>();
 
@@ -243,6 +244,7 @@ public class CosmeticUI {
                     productname = sc.next();
                     map.put("temp", temp);
                     map.put("productname", productname);
+                    product.setProductname(productname);
                     break;
 // 2) 화장품 가격 수정
                 case "2":
@@ -251,6 +253,7 @@ public class CosmeticUI {
                     productprice = sc.nextInt();
                     map.put("temp", temp);
                     map.put("productprice", productprice);
+                  //  product.setProductprice(productprice);
                     break;
 // 3) 화장품 타입 수정
                 case "3":
@@ -259,6 +262,8 @@ public class CosmeticUI {
                     producttype = sc.nextInt();
                     map.put("temp", temp);
                     map.put("producttype", producttype);
+                   // int result3 = service.updateProduct(map);
+                    product.setProducttype(producttype);
                     break;
 // 4) 화장품 기능 수정
                 case "4":
@@ -267,12 +272,15 @@ public class CosmeticUI {
                     productsolution = sc.nextInt();
                     map.put("temp", temp);
                     map.put("productsolution", productsolution);
+                  //  int result4 = service.updateProduct(map);
+                    product.setProductsolution(productsolution);
                     break;
 // 0) 이 전 메뉴로 가기
                 case "5":
                     return;
             }// switch
             int result = service.updateProduct(map);
+
         } // while
     }
     private void productUpdateMenu() {
@@ -317,7 +325,12 @@ public class CosmeticUI {
                 sc.nextLine();
                 continue; // 다시 입력받도록 간다.
             }
+
+
+
             break; // exception이 터지지 않으면 밖으로 빠져나가도록 해준다.
+
+
         }
         while (true) {
             System.out.println(" > 제품 목적 입력 ");
@@ -338,8 +351,7 @@ public class CosmeticUI {
         int result = service.insertProduct(p);
         if (result == 1)
             System.out.println(" 제품 등록이 완료되었습니다.");
-        else
-            System.out.println(" 제품 등록이 실패했습니다.");
+
     }
     private void selectMember() {
         String usrid;
@@ -561,7 +573,7 @@ public class CosmeticUI {
         System.out.println(" 2) 비밀번호 수정 ");
         System.out.println(" 3) 이메일 수정 ");
         System.out.println(" 4) 피부고민 수정 ");
-        System.out.println(" 0)  종료 ");
+        System.out.println(" 0) 이전메뉴로 이동 ");
         System.out.println(">>>");
     }
 
